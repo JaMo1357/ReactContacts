@@ -8,10 +8,10 @@ interface ContactsState {
   error: string | undefined
 }
 
-const initialState = {
+export const initialState = {
   isLoading: false,
-    contacts: [],
-    error: '',
+  contacts: [],
+  error: '',
 } as ContactsState
 
 export const contactsSlice = createSlice({

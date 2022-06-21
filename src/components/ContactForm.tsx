@@ -10,7 +10,7 @@ function ContactForm({ previewOnly = false, contactData }: ContactFormProps) {
   const provideContactDetails = (e: React.SyntheticEvent) => {    
     e.preventDefault()
 
-    const values = e.target
+    const values: any = e.target
     const contactObject: ContactInterface = {
       name: `${values.fn.value} ${values.ln.value}`,
       phone: values.tel.value,
