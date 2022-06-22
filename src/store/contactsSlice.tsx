@@ -37,9 +37,13 @@ export const contactsSlice = createSlice({
       }
     },
     updateContact: (state, { payload }: PayloadAction<ContactInterface>) => {
-      const contactIndex = state.contacts.findIndex(contact => contact.id === Number(payload.id))
-      
-      state.contacts[contactIndex] = payload
+      if (!payload.name || !payload.phone) {
+        state.error = 'Please fill all mandatory fields'
+      } else {
+        const contactIndex = state.contacts.findIndex(contact => contact.id === Number(payload.id))
+        
+        state.contacts[contactIndex] = payload
+      }
     },
     resetError: (state) => {
       state.error = ''
