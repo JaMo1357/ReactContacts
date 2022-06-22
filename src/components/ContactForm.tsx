@@ -10,17 +10,21 @@ function ContactForm({ previewOnly = false, contactData }: ContactFormProps) {
 
   let formStatusText = ''
   let inputStatusClasses = ''
+  let addingNew = false
 
   const formStatus = (pathname: string) => {
     if (pathname.includes('/edit-contact')) {
       formStatusText = 'Edit contact'
       inputStatusClasses = 'border-b'
+      addingNew = false
     } else if (pathname.includes('/contact')) {
       formStatusText = 'Contact Info'
       inputStatusClasses = ''
+      addingNew = false
     } else if (pathname.includes('/add-contact')) {
       formStatusText = 'Add new contact'
       inputStatusClasses = 'border-b border-sky-600 border-dashed'
+      addingNew = true
     }
   }
 
@@ -59,11 +63,20 @@ function ContactForm({ previewOnly = false, contactData }: ContactFormProps) {
         className="grid gap-1 grid-cols-2 auto-rows-max pt-7"
         onSubmit={ provideContactDetails }
       >
-        <label htmlFor="fn">first name</label>
+        <label htmlFor="fn">
+          first name
+          { addingNew? <span className="text-red-400">*</span> : '' }
+        </label>
         {(!previewOnly) ? <input className={`${inputStatusClasses} outline-0`} type="text" name="fn" placeholder="First name" defaultValue={name[0]} /> : <span>{ name[0] }</span> }
-        <label htmlFor="ln">last name</label>
+        <label htmlFor="ln">
+          last name
+          { addingNew ? <span className="text-red-400">*</span> : '' }
+        </label>
         {(!previewOnly) ? <input className={`${inputStatusClasses} outline-0`} type="text" name="ln" placeholder="Last name" defaultValue={name[1]} /> : <span>{ name[1] }</span> }
-        <label htmlFor="tel">phone</label>
+        <label htmlFor="tel">
+          phone
+          { addingNew ? <span className="text-red-400">*</span> : '' }
+        </label>
         {(!previewOnly) ? <input className={`${inputStatusClasses} outline-0`} type="text" name="tel" placeholder="Phone" defaultValue={contactData?.phone} /> : <span>{ contactData?.phone }</span> }
         <label htmlFor="email">email</label>
         {(!previewOnly) ? <input className={`${inputStatusClasses} outline-0`} type="email" name="email" placeholder="Email" defaultValue={contactData?.email} /> : <span>{ contactData?.email }</span> }

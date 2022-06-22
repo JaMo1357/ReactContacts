@@ -1,11 +1,21 @@
-import { Link } from "react-router-dom"
+import { useEffect } from "react";
+import { Link, useLocation  } from "react-router-dom"
 import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../store/'
+import { resetError } from '../store/contactsSlice'
 import { State } from '../../interfaces'
 
 function Header() {
+  const location = useLocation()
+  const dispatch = useAppDispatch()
+
   const error = useSelector((state : State) => {
     return state.error
   })
+  
+  useEffect(() => {
+    dispatch(resetError())
+  }, [location])
 
   return (
     <header className="flex flex-row w-full bg-sky-600">
@@ -14,7 +24,9 @@ function Header() {
         
         <div className="flex flex-col content-center justify-center text-center">
           <h3 className="text-white">Contacts</h3>  
-          <span>{ error }</span>
+          <span className="text-red-400">
+            { error }
+          </span>
         </div>
       </div>
     </header>

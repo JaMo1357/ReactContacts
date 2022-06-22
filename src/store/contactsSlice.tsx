@@ -19,10 +19,13 @@ export const contactsSlice = createSlice({
   initialState,
   reducers: {
     addContact: (state, { payload }: PayloadAction<ContactInterface>) => {
-      const highestID = state.contacts?.map((contact: ContactInterface) => contact?.id)?.pop() || 0
-      payload.id = highestID + 1
-
-      state.contacts.push(payload)
+      if (!payload.name || !payload.phone) {
+        state.error = 'Please fill all mandatory fields'
+      } else {
+        const highestID = state.contacts?.map((contact: ContactInterface) => contact?.id)?.pop() || 0
+        payload.id = highestID + 1
+        state.contacts.push(payload)
+      }
     },
     removeContact: (state, { payload }: PayloadAction<number>) => {
       const contactIndex = state.contacts.findIndex(contact => contact.id === Number(payload))
@@ -37,6 +40,9 @@ export const contactsSlice = createSlice({
       const contactIndex = state.contacts.findIndex(contact => contact.id === Number(payload.id))
       
       state.contacts[contactIndex] = payload
+    },
+    resetError: (state) => {
+      state.error = ''
     },
   },
   extraReducers: (builder) => {
@@ -54,7 +60,7 @@ export const contactsSlice = createSlice({
   }
 })
 
-export const { addContact, removeContact, updateContact } = contactsSlice.actions
+export const { addContact, removeContact, updateContact, resetError } = contactsSlice.actions
 
 export const fetchContacts = createAsyncThunk('contacts/fetchContacts', () => {
   return fetchContactsData()
