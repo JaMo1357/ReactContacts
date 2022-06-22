@@ -22,15 +22,15 @@ function Preview() {
       <section>
         <ContactForm previewOnly={true} contactData={contact} />
         <div className='inline-flex w-full items-center justify-center gap-2'>
-          <button className='px-2 py-1 border border-light-blue-400' onClick={onRemoveContact}>remove</button>
-          <Link className="px-2 py-1 flex border border-light-900 rounded-sm" to={`/edit-contact/${contact?.id}`}>
+          <button className='px-2 py-1 border border-light-blue-400 hover:bg-sky-700 hover:text-white' onClick={onRemoveContact}>remove</button>
+          <Link className="px-2 py-1 flex border border-light-900 rounded-sm hover:bg-sky-700 hover:text-white" to={`/edit-contact/${contact?.id}`}>
             edit
           </Link>
         </div>
       </section>
       )
   } else {
-    return (<span>No such contact found :(</span>)
+    return (<span className='p-5'>{`Contact with id ${id} not found`}</span>)
   }
 }
 
