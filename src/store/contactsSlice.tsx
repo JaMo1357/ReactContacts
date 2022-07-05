@@ -19,9 +19,7 @@ export const contactsSlice = createSlice({
   initialState,
   reducers: {
     addContact: (state, { payload }: PayloadAction<ContactInterface>) => {
-      const name = payload?.name?.split(' ') || []
-      
-      if (!name[0] || !name[1] || !payload.phone) {
+      if (!payload.name || !payload.phone) {
         state.error = 'Please fill all mandatory fields'
       } else {
         const highestID = state.contacts?.map((contact: ContactInterface) => contact?.id)?.pop() || 0
@@ -39,9 +37,7 @@ export const contactsSlice = createSlice({
       }
     },
     updateContact: (state, { payload }: PayloadAction<ContactInterface>) => {
-      const name = payload?.name?.split(' ') || []
-
-      if (!name[0] || !name[1] || !payload.phone) {
+      if (!payload.name || !payload.phone) {
         state.error = 'Please fill all mandatory fields'
       } else {
         const contactIndex = state.contacts.findIndex(contact => contact.id === Number(payload.id))

@@ -30,12 +30,12 @@ function ContactForm({ previewOnly = false, contactData }: ContactFormProps) {
 
   formStatus(pathname)
 
-  const provideContactDetails = (e: React.SyntheticEvent) => {    
+  const provideContactDetails = (e: React.SyntheticEvent) => {  
     e.preventDefault()
 
     const values: any = e.target
     const contactObject: ContactInterface = {
-      name: `${values.fn.value} ${values.ln.value}`,
+      name: values.name.value,
       phone: values.tel.value,
       email: values.email.value,
       address: {
@@ -54,8 +54,6 @@ function ContactForm({ previewOnly = false, contactData }: ContactFormProps) {
     }
   }
 
-  const name = contactData?.name?.split(' ') || []
-
   return (
     <div className='flex flex-col p-5'>
       <h1 className='font-bold'>{ formStatusText }</h1>
@@ -63,16 +61,11 @@ function ContactForm({ previewOnly = false, contactData }: ContactFormProps) {
         className="grid gap-1 grid-cols-2 auto-rows-max pt-7"
         onSubmit={ provideContactDetails }
       >
-        <label htmlFor="fn">
+        <label htmlFor="name">
           first name
           { showMandatoryStar? <span className="text-red-400">*</span> : '' }
         </label>
-        {(!previewOnly) ? <input className={`${inputStatusClasses} outline-0`} type="text" name="fn" placeholder="First name" defaultValue={name[0]} /> : <span>{ name[0] }</span> }
-        <label htmlFor="ln">
-          last name
-          { showMandatoryStar ? <span className="text-red-400">*</span> : '' }
-        </label>
-        {(!previewOnly) ? <input className={`${inputStatusClasses} outline-0`} type="text" name="ln" placeholder="Last name" defaultValue={name[1]} /> : <span>{ name[1] }</span> }
+        {(!previewOnly) ? <input className={`${inputStatusClasses} outline-0`} type="text" name="name" placeholder="First name" defaultValue={contactData?.name} /> : <span>{ contactData?.name }</span> }
         <label htmlFor="tel">
           phone
           { showMandatoryStar ? <span className="text-red-400">*</span> : '' }
